@@ -29,8 +29,17 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Set up Java (JDK 8)
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
         
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      - name: Run Streamlit with PySpark
+        env:
+          AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
+          AZURE_CONTAINER_NAME: ${{ secrets.AZURE_CONTAINER_NAME }}
+          AZURE_BLOB_NAME: ${{ secrets.AZURE_BLOB_NAME }}
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
