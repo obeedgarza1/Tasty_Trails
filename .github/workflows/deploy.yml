@@ -27,3 +27,6 @@ jobs:
           AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
           AZURE_CONTAINER_NAME: ${{ secrets.AZURE_CONTAINER_NAME }}
           AZURE_BLOB_NAME: ${{ secrets.AZURE_BLOB_NAME }}
+
+        run: |
+          python -m streamlit run main.py --server.port 8000 --server.address 0.0.0.0
