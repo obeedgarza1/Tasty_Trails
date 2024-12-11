@@ -27,5 +27,3 @@ jobs:
           AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
           AZURE_CONTAINER_NAME: ${{ secrets.AZURE_CONTAINER_NAME }}
           AZURE_BLOB_NAME: ${{ secrets.AZURE_BLOB_NAME }}
-        run: |
-          streamlit run main.py
