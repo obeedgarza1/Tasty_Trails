@@ -26,7 +26,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+
       - name: Install dependencies
         run: pip install -r requirements.txt
 
@@ -34,12 +34,6 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '8'
-        
-      - name: Run Streamlit with PySpark
-        env:
-          AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
-          AZURE_CONTAINER_NAME: ${{ secrets.AZURE_CONTAINER_NAME }}
-          AZURE_BLOB_NAME: ${{ secrets.AZURE_BLOB_NAME }}
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -59,7 +53,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
@@ -70,13 +64,12 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_23A4CF20EA6C4F168365B3B3F1A7AD87 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_83FBCA3101EA4408956A58A3A9D3F3ED }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_57BE3D9E0C0A4E18BE2E75DC71BED7E8 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -84,4 +77,7 @@ jobs:
         with:
           app-name: 'tasty-trails'
           slot-name: 'Production'
-          
+
+      - name: Set secrets in Azure App (Optional, if needed in the Web App)
+        run: |
+          az webapp config appsettings set --name tasty-trails --resource-group tastyapp --settings AZURE_CONNECTION_STRING="${{ secrets.AZURE_CONNECTION_STRING }}" AZURE_CONTAINER_NAME="${{ secrets.AZURE_CONTAINER_NAME }}" AZURE_BLOB_NAME="${{ secrets.AZURE_BLOB_NAME }}"
