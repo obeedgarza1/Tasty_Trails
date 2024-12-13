@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# Navigate to the /home directory (adjust if needed)
+# Navigate to the /home/site/wwwroot directory
 cd /home/site/wwwroot
 
-# Extract the tar.gz file directly in /home/site/wwwroot
-tar -xzvf output.tar.gz -C /home/site/wwwroot
-
-# Install necessary dependencies (Java and others)
+# Install necessary dependencies (Java)
 apt-get update && apt-get install -y software-properties-common
 apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
 apt-get update && apt-get install -y openjdk-8-jdk
