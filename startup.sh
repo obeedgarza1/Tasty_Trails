@@ -4,9 +4,11 @@
 cd /home/site/wwwroot
 
 # Install necessary dependencies (Java and others)
-apt-get update && apt-get install -y software-properties-common
+apt-get update && apt-get install -y software-properties-common wget
+
+# Adding OpenJDK repository and installing Java 8 (if it's not already installed)
 apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
-apt-get update && apt-get install -y openjdk-8-jdk wget
+apt-get update && apt-get install -y openjdk-8-jdk
 
 # Set JAVA_HOME and PATH
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
