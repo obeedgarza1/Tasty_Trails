@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Navigate to the directory where output.tar.gz is located
-cd /home/site/wwwroot  # Adjust if necessary
+# Navigate to the /home directory (adjust if needed)
+cd /home/site/wwwroot
 
-# Extract the tar.gz file
-tar -xzvf output.tar.gz -C /tmp/8dd1b06a7f764f8
+# Extract the tar.gz file directly in /home/site/wwwroot
+tar -xzvf output.tar.gz -C /home/site/wwwroot
 
 # Install necessary dependencies (Java and others)
 apt-get update && apt-get install -y software-properties-common
@@ -21,4 +21,4 @@ java -version
 
 # Run the Streamlit app
 echo "Running Streamlit app..."
-streamlit run /home/site/wwwroot/main.py --server.port 8000 --server.address 0.0.0.0  # Adjust as needed
+streamlit run /home/site/wwwroot/main.py --server.port 8000 --server.address 0.0.0.0
